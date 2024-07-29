@@ -33,9 +33,14 @@
 /**定义dp[i]为以nums[i]为序列结尾的最大序列长度
  * 对于此转移方程，并不能由i-1推到i,而是在dp[0]-dp[i-1]转化之后求最优解，类似于换零钱那一题
  * dp[i]=Math.max(dp[j]+1)其中(0<=j<i且nums[j]<nums[j])
+ * 同时注意，这里dp[i]定义的是以nums[i]结尾，不一定是最大值，所以还要更新最大值
  */
 const lengthOfLIS=nums=>{
+  if(nums.length==0){
+    return 0
+  }
   let dp=[]
+  let ans=1
   // dp[0]=1;
   for(let i=0;i<nums.length;i++){
     dp[i]=1
@@ -44,6 +49,7 @@ const lengthOfLIS=nums=>{
         dp[i]=Math.max(dp[i],dp[j]+1);
       }
     }
+    ans=Math.max(ans,dp[i])
   }
-  return dp[nums.length-1]
+  return ans
 }
