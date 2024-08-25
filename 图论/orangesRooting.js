@@ -47,9 +47,9 @@ const orangesRotting=grid=>{
   const n=grid[0].length
   for(let i=0;i<grid.length;i++){
     for(let j=0;j<grid[0].length;j++){
-        if(grid[i][j]==='1'){
+        if(grid[i][j]===1){
           count++//记录初始新鲜橘子的个数
-        }else if(grid[i][j]==='2'){
+        }else if(grid[i][j]===2){
           queue.push([i,j])//将坏掉的橘子放入队列作为起点
         }                      
     }
@@ -58,33 +58,36 @@ const orangesRotting=grid=>{
     return 0
   }
   while(queue.length!==0){
+    console.table(queue)
+    console.table(grid)
     const len=queue.length
     let isRot=false
     // for(let i=0;i<queue.length;i++){  //队列长度是变化的，要先记录一下
     for(let i=0;i<len;i++){
       // const badPos=queue.pop();
-      const [x,y]=queue.pop()
-      if(x+1<m&&grid[x+1,y]==='1'){
+      const [x,y]=queue.shift()
+      // pop是从队尾移除，那么就是先进后出，违背了队列先进先出的原则
+      if(x+1<m&&grid[x+1][y]===1){
         queue.push([x+1,y])
-        grid[x+1][y]='2'
+        grid[x+1][y]=2
         isRot=true
         count--
       }
-      if(x-1>=0&&grid[x-1,y]==='1'){
+      if(x-1>=0&&grid[x-1][y]===1){
         queue.push([x-1,y])
-        grid[x-1][y]='2'
+        grid[x-1][y]=2
         isRot=true
         count--
       }
-      if(y+1<n&&grid[x,y+1]==='1'){
+      if(y+1<n&&grid[x][y+1]===1){
         queue.push([x,y+1])
-        grid[x][y+1]='2'
+        grid[x][y+1]=2
         isRot=true
         count--
       }
-      if(y-1>=0&&grid[x,y-1]==='1'){
+      if(y-1>=0&&grid[x][y-1]===1){
         queue.push([x,y-1])
-        grid[x][y-1]='2'
+        grid[x][y-1]=2
         isRot=true
         count--
       }
